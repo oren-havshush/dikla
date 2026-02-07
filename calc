@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחשבון חיסכון לעתיד הילדים</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+            color: #1a202c;
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 40px 20px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 0 0 30px 30px;
+            margin: 0 -20px 30px;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 14px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        /* Section Headers */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* Goal Cards */
+        .goal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .goal-card {
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .goal-card:hover {
+            border-color: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        .goal-card.active {
+            border-color: #22c55e;
+            background: #f0fdf4;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+
+        .goal-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .goal-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        /* Input Fields */
+        .input-group {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 18px;
+            font-weight: 600;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: #f7fafc;
+            color: #1a202c;
+            transition: all 0.2s;
+        }
+
+        input[type="number"]:focus,
+        input[type="date"]:focus {
+            outline: none;
+            border-color: #22c55e;
+            background: white;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: 600;
+            color: #718096;
+        }
+
+        input[type="number"] {
+            padding-left: 40px;
+        }
+
+        /* Quick Chips */
+        .chips {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .chip {
+            flex: 1;
+            padding: 10px;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .chip:hover {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+        }
+
+        .chip:active {
+            transform: scale(0.95);
+        }
+
+        /* Risk Pills */
+        .risk-pills {
+            display: flex;
+            gap: 8px;
+            background: #f7fafc;
+            padding: 6px;
+            border-radius: 12px;
+        }
+
+        .risk-pill {
+            flex: 1;
+            padding: 12px 8px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .risk-pill:hover {
+            background: #e2e8f0;
+        }
+
+        .risk-pill.active {
+            background: #22c55e;
+            color: white;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+        }
+
+        .risk-note {
+            font-size: 11px;
+            color: #718096;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* Target Age Note */
+        .target-note {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        /* Initial Deposit Toggle */
+        .toggle-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #667eea;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .toggle-btn:hover {
+            color: #5a67d8;
+        }
+
+        .initial-deposit-input {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .initial-deposit-input.show {
+            display: block;
+        }
+
+        /* Results Card */
+        .results {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            border-radius: 20px;
+            padding: 30px 24px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.25);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-label {
+            font-size: 14px;
+            opacity: 0.95;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .results-amount {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            line-height: 1;
+        }
+
+        .results-period {
+            font-size: 18px;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        .results-details {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            font-size: 13px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Warning */
+        .warning {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            border-radius: 16px;
+            padding: 16px;
+            color: #92400e;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .warning.show {
+            display: block;
+        }
+
+        /* FOMO Section */
+        .fomo {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .fomo.show {
+            display: block;
+        }
+
+        .fomo-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .fomo-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #fef2f2;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border-right: 4px solid #ef4444;
+        }
+
+        .fomo-row:last-of-type {
+            background: #fee2e2;
+            border-right-color: #dc2626;
+        }
+
+        .fomo-label {
+            font-size: 13px;
+            color: #7f1d1d;
+            font-weight: 600;
+        }
+
+        .fomo-amount {
+            font-size: 16px;
+            font-weight: 800;
+            color: #991b1b;
+        }
+
+        .fomo-note {
+            font-size: 12px;
+            color: #991b1b;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* WhatsApp CTA */
+        .whatsapp-btn {
+            width: 100%;
+            padding: 18px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .whatsapp-btn:hover {
+            background: #22c35b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-btn:active {
+            transform: translateY(0);
+        }
+
+        .whatsapp-icon {
+            font-size: 24px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 11px;
+            color: #718096;
+        }
+
+        @media (min-width: 640px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .goal-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>כמה תרצו לעזור לילד/ה שלכם בעתיד?</h1>
+        <p>בוחרים יעד, מזינים תאריך לידה, ומקבלים חישוב חודשי.</p>
+    </div>
+
+    <div class="container">
+        <!-- Step 1: Goal Selection -->
+        <div class="section">
+            <label class="section-label">בחרו יעד חיסכון:</label>
+            <div class="goal-grid">
+                <div class="goal-card" data-goal="car" data-age="21" data-amount="60000">
+                    <div class="goal-icon">🚗</div>
+                    <div class="goal-label">רכב ראשון</div>
+                </div>
+                <div class="goal-card" data-goal="studies" data-age="23" data-amount="80000">
+                    <div class="goal-icon">🎓</div>
+                    <div class="goal-label">לימודים</div>
+                </div>
+                <div class="goal-card" data-goal="wedding" data-age="27" data-amount="100000">
+                    <div class="goal-icon">💍</div>
+                    <div class="goal-label">חתונה</div>
+                </div>
+                <div class="goal-card" data-goal="apartment" data-age="30" data-amount="150000">
+                    <div class="goal-icon">🏠</div>
+                    <div class="goal-label">עזרה לדירה</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Amount Input -->
+        <div class="section">
+            <label class="section-label">כמה תרצו שיהיה בגיל היעד?</label>
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <input type="number" id="targetAmount" min="10000" step="1000" value="60000">
+                    <span class="currency-symbol">₪</span>
+                </div>
+                <div class="chips">
+                    <button class="chip" onclick="setAmount(50000)">50,000</button>
+                    <button class="chip" onclick="setAmount(100000)">100,000</button>
+                    <button class="chip" onclick="setAmount(150000)">150,000</button>
+                </div>
+                <div class="target-note" id="targetNote">הנחת גיל יעד: 21</div>
+            </div>
+        </div>
+
+        <!-- Step 3: Child Birthdate -->
+        <div class="section">
+            <label class="section-label">תאריך לידה של הילד/ה:</label>
+            <div class="input-group">
+                <input type="date" id="birthdate">
+            </div>
+        </div>
+
+        <!-- Step 4: Risk Profile -->
+        <div class="section">
+            <label class="section-label">מסלול השקעה:</label>
+            <div class="input-group">
+                <div class="risk-pills">
+                    <button class="risk-pill" data-return="0.03" onclick="selectRisk(this, 0.03)">סולידי</button>
+                    <button class="risk-pill active" data-return="0.05" onclick="selectRisk(this, 0.05)">מאוזן</button>
+                    <button class="risk-pill" data-return="0.07" onclick="selectRisk(this, 0.07)">צמיחה</button>
+                </div>
+                <div class="risk-note">תשואה משוערת להמחשה בלבד</div>
+                
+                <!-- Initial Deposit Toggle -->
+                <div class="toggle-section">
+                    <button class="toggle-btn" onclick="toggleInitialDeposit()">
+                        <span id="toggleIcon">▼</span>
+                        <span>הפקדה חד פעמית (אופציונלי)</span>
+                    </button>
+                    <div class="initial-deposit-input" id="initialDepositSection">
+                        <div class="input-wrapper">
+                            <input type="number" id="initialDeposit" min="0" step="1000" value="0">
+                            <span class="currency-symbol">₪</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warning -->
+        <div class="warning" id="warning">
+            הילד/ה כבר בגיל היעד. בחרו יעד אחר.
+        </div>
+
+        <!-- Results -->
+        <div class="results" id="results">
+            <div class="results-label">צריך לחסוך בערך:</div>
+            <div class="results-amount" id="monthlyAmount">₪0</div>
+            <div class="results-period">/חודש</div>
+            <div class="results-details" id="resultsDetails">
+                עד גיל <span id="resultAge">21</span> כדי להגיע ל־₪<span id="resultTarget">60,000</span><br>
+                יתרת זמן: <span id="resultYears">0</span> שנים
+            </div>
+        </div>
+
+        <!-- FOMO Section -->
+        <div class="fomo" id="fomo">
+            <div class="fomo-title">מה קורה אם מחכים?</div>
+            <div class="fomo-row">
+                <div class="fomo-label">אם מחכים 3 שנים:</div>
+                <div class="fomo-amount" id="delay3">₪0/חודש</div>
+            </div>
+            <div class="fomo-row">
+                <div class="fomo-label">אם מחכים 5 שנים:</div>
+                <div class="fomo-amount" id="delay5">₪0/חודש</div>
+            </div>
+            <div class="fomo-note">דחייה מעלה את ההפקדה החודשית משמעותית.</div>
+        </div>
+
+        <!-- WhatsApp CTA -->
+        <button class="whatsapp-btn" id="whatsappBtn" onclick="sendToWhatsApp()" style="display: none;">
+            <span class="whatsapp-icon">💬</span>
+            <span>שלחו לי את החישוב בוואטסאפ</span>
+        </button>
+
+        <!-- Footer -->
+        <div class="footer">
+            המידע להמחשה בלבד ואינו ייעוץ פיננסי.
+        </div>
+    </div>
+
+    <script>
+        const WHATSAPP_PHONE = "972501234567";
+        
+        let state = {
+            goal: "car",
+            goalLabel: "רכב ראשון",
+            targetAge: 21,
+            targetAmount: 60000,
+            birthdate: null,
+            annualReturn: 0.05,
+            riskLabel: "מאוזן",
+            initialDeposit: 0,
+            currentAge: 0,
+            yearsRemaining: 0,
+            monthlyRequired: 0
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select first goal by default
+            document.querySelector('.goal-card').click();
+            
+            // Set default date to 5 years ago
+            const fiveYearsAgo = new Date();
+            fiveYearsAgo.setFullYear(fiveYearsAgo.getFullYear() - 5);
+            document.getElementById('birthdate').value = fiveYearsAgo.toISOString().split('T')[0];
+            
+            // Add event listeners
+            document.getElementById('targetAmount').addEventListener('input', calculate);
+            document.getElementById('birthdate').addEventListener('change', calculate);
+            document.getElementById('initialDeposit').addEventListener('input', calculate);
+            
+            // Initial calculation
+            calculate();
+        });
+
+        // Goal Selection
+        document.querySelectorAll('.goal-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                
+                state.goal = this.dataset.goal;
+                state.targetAge = parseInt(this.dataset.age);
+                state.targetAmount = parseInt(this.dataset.amount);
+                
+                const labels = {
+                    car: 'רכב ראשון',
+                    studies: 'לימודים',
+                    wedding: 'חתונה',
+                    apartment: 'עזרה לדירה'
+                };
+                state.goalLabel = labels[state.goal];
+                
+                document.getElementById('targetAmount').value = state.targetAmount;
+                document.getElementById('targetNote').textContent = `הנחת גיל יעד: ${state.targetAge}`;
+                
+                calculate();
+            });
+        });
+
+        function setAmount(amount) {
+            document.getElementById('targetAmount').value = amount;
+            state.targetAmount = amount;
+            calculate();
+        }
+
+        function selectRisk(btn, returnRate) {
+            document.querySelectorAll('.risk-pill').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            state.annualReturn = returnRate;
+            
+            const labels = { 0.03: 'סולידי', 0.05: 'מאוזן', 0.07: 'צמיחה' };
+            state.riskLabel = labels[returnRate];
+            
+            calculate();
+        }
+
+        function toggleInitialDeposit() {
+            const section = document.getElementById('initialDepositSection');
+            const icon = document.getElementById('toggleIcon');
+            section.classList.toggle('show');
+            icon.textContent = section.classList.contains('show') ? '▲' : '▼';
+        }
+
+        function calculate() {
+            // Get inputs
+            state.targetAmount = parseFloat(document.getElementById('targetAmount').value) || 0;
+            state.initialDeposit = parseFloat(document.getElementById('initialDeposit').value) || 0;
+            const birthdateStr = document.getElementById('birthdate').value;
+            
+            if (!birthdateStr) {
+                hideResults();
+                return;
+            }
+
+            state.birthdate = birthdateStr;
+
+            // Calculate current age
+            const birthDate = new Date(birthdateStr);
+            const today = new Date();
+            const ageInDays = (today - birthDate) / (1000 * 60 * 60 * 24);
+            state.currentAge = ageInDays / 365.25;
+            
+            // Calculate years remaining
+            state.yearsRemaining = state.targetAge - state.currentAge;
+            
+            // Check if valid
+            if (state.yearsRemaining <= 0) {
+                showWarning();
+                hideResults();
+                return;
+            }
+
+            hideWarning();
+
+            // Calculate monthly payment required
+            const i = state.annualReturn / 12;
+            const n = Math.max(1, Math.round(state.yearsRemaining * 12));
+            const FV = state.targetAmount;
+            const PV = state.initialDeposit;
+
+            let PMT;
+            if (i === 0) {
+                PMT = (FV - PV) / n;
+            } else {
+                const futureValueOfPV = PV * Math.pow(1 + i, n);
+                const numerator = (FV - futureValueOfPV) * i;
+                const denominator = Math.pow(1 + i, n) - 1;
+                PMT = numerator / denominator;
+            }
+
+            state.monthlyRequired = Math.max(0, Math.round(PMT / 10) * 10);
+
+            // Display results
+            showResults();
+
+            // Calculate FOMO scenarios
+            calculateFOMO();
+        }
+
+        function showResults() {
+            const resultsEl = document.getElementById('results');
+            const monthlyEl = document.getElementById('monthlyAmount');
+            const yearsEl = document.getElementById('resultYears');
+            const targetEl = document.getElementById('resultTarget');
+            const ageEl = document.getElementById('resultAge');
+            
+            monthlyEl.textContent = `₪${formatNumber(state.monthlyRequired)}`;
+            yearsEl.textContent = state.yearsRemaining.toFixed(1);
+            targetEl.textContent = formatNumber(state.targetAmount);
+            ageEl.textContent = state.targetAge;
+            
+            resultsEl.classList.add('show');
+            document.getElementById('whatsappBtn').style.display = 'flex';
+        }
+
+        function hideResults() {
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('fomo').classList.remove('show');
+            document.getElementById('whatsappBtn').style.display = 'none';
+        }
+
+        function showWarning() {
+            document.getElementById('warning').classList.add('show');
+        }
+
+        function hideWarning() {
+            document.getElementById('warning').classList.remove('show');
+        }
+
+        function calculateFOMO() {
+            const fomoEl = document.getElementById('fomo');
+            const delay3El = document.getElementById('delay3');
+            const delay5El = document.getElementById('delay5');
+
+            // Delay 3 years
+            const years3 = state.yearsRemaining - 3;
+            if (years3 > 0) {
+                const pmt3 = calculatePMT(years3);
+                delay3El.textContent = `₪${formatNumber(pmt3)}/חודש`;
+            } else {
+                delay3El.textContent = 'לא רלוונטי';
+            }
+
+            // Delay 5 years
+            const years5 = state.yearsRemaining - 5;
+            if (years5 > 0) {
+                const pmt5 = calculatePMT(years5);
+                delay5El.textContent = `₪${formatNumber(pmt5)}/חודש`;
+            } else {
+                delay5El.textContent = 'לא רלוונטי';
+            }
+
+            fomoEl.classList.add('show');
+        }
+
+        function calculatePMT(years) {
+            const i = state.annualReturn / 12;
+            const n = Math.max(1, Math.round(years * 12));
+            const FV = state.targetAmount;
+            const PV = state.initialDeposit;
+
+            let PMT;
+            if (i === 0) {
+                PMT = (FV - PV) / n;
+            } else {
+                const futureValueOfPV = PV * Math.pow(1 + i, n);
+                const numerator = (FV - futureValueOfPV) * i;
+                const denominator = Math.pow(1 + i, n) - 1;
+                PMT = numerator / denominator;
+            }
+
+            return Math.max(0, Math.round(PMT / 10) * 10);
+        }
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('he-IL').format(Math.round(num));
+        }
+
+        function sendToWhatsApp() {
+            const message = `שלום, עשיתי חישוב באתר.
+
+יעד: ${state.goalLabel}
+גיל יעד: ${state.targetAge}
+סכום יעד: ${formatNumber(state.targetAmount)} ₪
+תאריך לידה: ${state.birthdate}
+יתרת זמן: ${state.yearsRemaining.toFixed(1)} שנים
+הפקדה נדרשת: ${formatNumber(state.monthlyRequired)} ₪ לחודש
+מסלול: ${state.riskLabel}
+הפקדה חד פעמית: ${formatNumber(state.initialDeposit)} ₪
+
+אשמח לעזרה לתכנון.`;
+
+            const url = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
