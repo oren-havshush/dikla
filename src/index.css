@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Surface colors */
+    --color-surface-bg: #FAFAF7;
+    --color-surface-primary: #FFFFFF;
+    --color-surface-secondary: #F5F4F0;
+    --color-surface-tertiary: #EDECE8;
+
+    /* Text colors */
+    --color-text-primary: #1A1A2E;
+    --color-text-secondary: #5A5A72;
+    --color-text-tertiary: #8E8EA0;
+
+    /* Border */
+    --color-border-default: #E5E4E0;
+    --color-border-hover: #D4D3CF;
+
+    /* Gradients */
+    --gradient-accent: linear-gradient(135deg, #3B5BF5 0%, #6080FA 50%, #FF7F50 100%);
+    --gradient-cta: linear-gradient(135deg, #FF7F50 0%, #FE5C28 100%);
+    --gradient-growth: linear-gradient(135deg, #3B5BF5 0%, #10B981 100%);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-surface-bg);
+    color: var(--color-text-primary);
+    font-family: 'Heebo', 'Assistant', system-ui, sans-serif;
+  }
+
+  /* Tabular numbers for financial data */
+  .font-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* Glass effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .glass-subtle {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-on-dark {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #3B5BF5, #FF7F50);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Mesh background */
+  .mesh-bg {
+    position: relative;
+  }
+
+  .mesh-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(219, 228, 254, 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 30%, rgba(255, 232, 219, 0.4) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(209, 250, 229, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Card base */
+  .card {
+    background: var(--color-surface-primary);
+    border: 1px solid var(--color-border-default);
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(26, 26, 46, 0.04), 0 4px 12px rgba(26, 26, 46, 0.03);
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 2px 8px rgba(26, 26, 46, 0.06), 0 8px 24px rgba(26, 26, 46, 0.06);
+    transform: translateY(-2px);
+  }
+
+  /* Selection card */
+  .selection-card {
+    @apply card;
+    cursor: pointer;
+    border-width: 2px;
+    border-color: var(--color-border-default);
+  }
+
+  .selection-card.selected {
+    border-color: #3B5BF5;
+    background: #EFF3FF;
+    box-shadow: 0 0 0 4px rgba(59, 91, 245, 0.1),
+                0 2px 8px rgba(26, 26, 46, 0.06);
+  }
+
+  /* Premium range slider */
+  .premium-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--color-surface-tertiary);
+    outline: none;
+  }
+
+  .premium-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #3B5BF5;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(59, 91, 245, 0.3);
+    transition: transform 150ms ease, box-shadow 150ms ease;
+  }
+
+  .premium-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 16px rgba(59, 91, 245, 0.4);
+  }
+
+  .premium-slider::-webkit-slider-thumb:active {
+    transform: scale(1.2);
+    background: #3B5BF5;
+    border-color: #2540EA;
+  }
+
+  .premium-slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #3B5BF5;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(59, 91, 245, 0.3);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide scrollbar for testimonial carousel */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
