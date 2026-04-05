@@ -27,7 +27,7 @@ export default function HeroSection({ onStartCalculation }: HeroSectionProps) {
         >
           תכנון נכון היום.
           <br />
-          <span className="gradient-text">שקט נפשי כלכלי מחר.</span>
+          <span className="gradient-text">שקט כלכלי מחר.</span>
         </motion.h1>
 
         {/* Subtitle */}

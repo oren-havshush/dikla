@@ -62,6 +62,14 @@ export default function ResultsPanel({ inputs, updateInput }: ResultsPanelProps)
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-3 leading-tight">
               אם תפקידו ₪{formatCurrency(inputs.monthlyAmount)} בחודש למשך {inputs.years} שנים
+              {inputs.initialDeposit > 0 && (
+                <>
+                  <br />
+                  <span className="text-xl sm:text-2xl text-secondary">
+                    ובנוסף ₪{formatCurrency(inputs.initialDeposit)} כהפקדה חד פעמית
+                  </span>
+                </>
+              )}
             </h2>
           </div>
 
@@ -201,7 +209,7 @@ export default function ResultsPanel({ inputs, updateInput }: ResultsPanelProps)
             className="card p-6 md:p-8"
           >
             <h3 className="text-lg font-bold text-primary mb-6">התאימו את התכנון</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6">
               <div>
                 <label className="block text-sm font-medium text-secondary mb-2">מספר שנים</label>
                 <select
@@ -213,22 +221,6 @@ export default function ResultsPanel({ inputs, updateInput }: ResultsPanelProps)
                     <option key={y} value={y}>{y} שנים</option>
                   ))}
                 </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-secondary mb-2">הפקדה חד פעמית (אופציונלי)</label>
-                <div className="relative">
-                  <input
-                    type="number"
-                    value={inputs.initialDeposit}
-                    onChange={(e) => updateInput('initialDeposit', Number(e.target.value))}
-                    className="w-full px-4 py-3 rounded-xl border-2 border-default focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-400 bg-white text-lg font-semibold font-mono"
-                    min="0"
-                    step="1000"
-                    placeholder="0"
-                  />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-tertiary font-semibold">₪</span>
-                </div>
               </div>
             </div>
           </motion.div>

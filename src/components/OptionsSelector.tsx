@@ -41,26 +41,46 @@ export default function OptionsSelector({ inputs, updateInput }: OptionsSelector
           transition={{ duration: 0.5 }}
           className="space-y-12"
         >
-          {/* Monthly Amount */}
+          {/* Contribution Setup */}
           <div>
-            <h3 className="text-2xl font-bold text-primary mb-2">כמה תרצו להפקיד בכל חודש?</h3>
-            <p className="text-secondary text-sm mb-6">גררו את הסליידר או הזינו סכום</p>
+            <h3 className="text-2xl font-bold text-primary mb-2">כמה תרצו להפקיד?</h3>
+            <p className="text-secondary text-sm mb-6">אפשר לשלב הפקדה חודשית עם הפקדה חד פעמית</p>
 
             <div className="card p-8 hover:transform-none">
-              {/* Amount Display */}
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <span className="text-2xl font-bold text-secondary">₪</span>
-                <input
-                  type="number"
-                  value={inputs.monthlyAmount}
-                  onChange={(e) => {
-                    const val = Math.max(100, Math.min(10000, Number(e.target.value)));
-                    updateInput('monthlyAmount', val);
-                  }}
-                  className="w-36 text-4xl font-extrabold text-primary-600 bg-transparent text-center focus:outline-none focus:ring-0 border-b-2 border-transparent focus:border-primary-300 font-mono"
-                  min="100"
-                  max="10000"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div>
+                  <label className="block text-sm font-medium text-secondary mb-2">הפקדה חודשית</label>
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="text-2xl font-bold text-secondary">₪</span>
+                    <input
+                      type="number"
+                      value={inputs.monthlyAmount}
+                      onChange={(e) => {
+                        const val = Math.max(100, Math.min(10000, Number(e.target.value)));
+                        updateInput('monthlyAmount', val);
+                      }}
+                      className="w-36 text-4xl font-extrabold text-primary-600 bg-transparent text-center focus:outline-none focus:ring-0 border-b-2 border-transparent focus:border-primary-300 font-mono"
+                      min="100"
+                      max="10000"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-secondary mb-2">הפקדה חד פעמית (אופציונלי)</label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={inputs.initialDeposit}
+                      onChange={(e) => updateInput('initialDeposit', Number(e.target.value))}
+                      className="w-full px-4 py-3 pr-10 rounded-xl border-2 border-default focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-400 bg-white text-lg font-semibold font-mono"
+                      min="0"
+                      step="1000"
+                      placeholder="0"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-tertiary font-semibold">₪</span>
+                  </div>
+                </div>
               </div>
 
               {/* Premium Slider */}
